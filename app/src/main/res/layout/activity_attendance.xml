@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="32dp">
+
+        <TextView
+            android:id="@+id/btnBack"
+            style="@style/BackButton"
+            android:text="@string/back" />
+
+        <TextView
+            android:id="@+id/tvScreenTitle"
+            style="@style/ScreenTitle"
+            android:text="@string/attendance_title" />
+
+        <TextView
+            android:id="@+id/tvScreenSubtitle"
+            style="@style/ScreenSubtitle"
+            android:text="@string/attendance_subtitle" />
+
+        <TextView
+            android:id="@+id/tvSprintBadge"
+            style="@style/SprintBadge"
+            android:text="@string/attendance_sprint" />
+
+        <LinearLayout
+            style="@style/PlanBox">
+
+            <TextView
+                style="@style/PlanTitle"
+                android:text="@string/attendance_plan_title" />
+
+            <TextView
+                style="@style/BodyText"
+                android:text="@string/attendance_plan" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPlaceholder"
+            style="@style/PlaceholderText"
+            android:text="@string/attendance_placeholder" />
+
+    </LinearLayout>
+</ScrollView>
