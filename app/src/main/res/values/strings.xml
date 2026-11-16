@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Контроль посещаемости</string>
+    <string name="app_short_name">Посещаемость</string>
+
+    <string name="main_subtitle">Учёт посещаемости студентов колледжа</string>
+    <string name="main_section_actions">Разделы</string>
+    <string name="main_footer">Спринт 1 · каркас приложения · v0.1.0</string>
+
+    <string name="menu_students">Студенты</string>
+    <string name="menu_students_hint">Список групп и студентов</string>
+    <string name="menu_attendance">Отметить посещаемость</string>
+    <string name="menu_attendance_hint">Занятие и статусы присутствия</string>
+    <string name="menu_statistics">Статистика</string>
+    <string name="menu_statistics_hint">Пропуски, опоздания и история</string>
+
+    <string name="back">← Назад</string>
+
+    <string name="students_title">Студенты</string>
+    <string name="students_subtitle">Учебные группы и карточки студентов</string>
+    <string name="students_placeholder">Экран-заготовка. Здесь появятся список студентов и форма добавления.</string>
+    <string name="students_plan_title">Планируется в следующих спринтах:</string>
+    <string name="students_plan">• список студентов выбранной группы\n• добавление студента с проверкой полей\n• удаление с подтверждением</string>
+    <string name="students_sprint">Спринт 2</string>
+
+    <string name="attendance_title">Отметить посещаемость</string>
+    <string name="attendance_subtitle">Занятие и статусы присутствия</string>
+    <string name="attendance_placeholder">Экран-заготовка. Здесь появится выбор занятия и список студентов для отметки.</string>
+    <string name="attendance_plan_title">Планируется в следующих спринтах:</string>
+    <string name="attendance_plan">• выбор группы, даты и дисциплины\n• статусы «Присутствовал», «Отсутствовал», «Опоздал»\n• сохранение отметки для каждого студента</string>
+    <string name="attendance_sprint">Спринт 3</string>
+
+    <string name="statistics_title">Статистика</string>
+    <string name="statistics_subtitle">Пропуски, опоздания и история</string>
+    <string name="statistics_placeholder">Экран-заготовка. Здесь появится история посещаемости и подсчёт статусов.</string>
+    <string name="statistics_plan_title">Планируется в следующих спринтах:</string>
+    <string name="statistics_plan">• история отметок по студенту и группе\n• количество занятий, присутствий и пропусков\n• фильтры по дате и группе</string>
+    <string name="statistics_sprint">Спринт 5</string>
+
+    <string name="placeholder_hint">Структура экрана готова, функции добавятся на своём спринте.</string>
+</resources>
