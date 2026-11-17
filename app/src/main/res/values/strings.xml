@@ -5,7 +5,7 @@
 
     <string name="main_subtitle">Учёт посещаемости студентов колледжа</string>
     <string name="main_section_actions">Разделы</string>
-    <string name="main_footer">Спринт 1 · каркас приложения · v0.1.0</string>
+    <string name="main_footer">Спринт 2 · студенты и группы · v0.2.0</string>
 
     <string name="menu_students">Студенты</string>
     <string name="menu_students_hint">Список групп и студентов</string>
@@ -17,11 +17,32 @@
     <string name="back">← Назад</string>
 
     <string name="students_title">Студенты</string>
-    <string name="students_subtitle">Учебные группы и карточки студентов</string>
-    <string name="students_placeholder">Экран-заготовка. Здесь появятся список студентов и форма добавления.</string>
-    <string name="students_plan_title">Планируется в следующих спринтах:</string>
-    <string name="students_plan">• список студентов выбранной группы\n• добавление студента с проверкой полей\n• удаление с подтверждением</string>
-    <string name="students_sprint">Спринт 2</string>
+    <string name="students_subtitle">Все студенты и их учебные группы</string>
+    <string name="students_count">Студентов: %1$d</string>
+    <string name="students_empty_title">Пока нет студентов</string>
+    <string name="students_empty_hint">Добавьте первого студента — он появится в списке и будет доступен для отметки посещаемости.</string>
+    <string name="students_memory_hint">Данные хранятся в памяти до подключения базы (спринт 4)</string>
+    <string name="add_student">Добавить студента</string>
+
+    <string name="new_student_title">Новый студент</string>
+    <string name="new_student_subtitle">Заполните все поля: фамилия, имя и группа.</string>
+    <string name="hint_last_name">Фамилия</string>
+    <string name="hint_first_name">Имя</string>
+    <string name="hint_group">Группа (например, 2ИП-4-25)</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
+
+    <string name="error_required">Заполните поле</string>
+    <string name="error_spaces">Поле не может состоять из пробелов</string>
+    <string name="error_too_long">Слишком длинное значение (не более 40 символов)</string>
+    <string name="error_duplicate">Такой студент уже есть в этой группе</string>
+
+    <string name="student_added">Студент добавлен</string>
+    <string name="student_deleted">Студент удалён</string>
+    <string name="delete_student_title">Удалить студента?</string>
+    <string name="delete_student_message">Удалить %1$s из списка? Отметки посещаемости этого студента тоже будут удалены.</string>
+    <string name="delete_student_cd">Удалить студента</string>
 
     <string name="attendance_title">Отметить посещаемость</string>
     <string name="attendance_subtitle">Занятие и статусы присутствия</string>
@@ -36,6 +57,4 @@
     <string name="statistics_plan_title">Планируется в следующих спринтах:</string>
     <string name="statistics_plan">• история отметок по студенту и группе\n• количество занятий, присутствий и пропусков\n• фильтры по дате и группе</string>
     <string name="statistics_sprint">Спринт 5</string>
-
-    <string name="placeholder_hint">Структура экрана готова, функции добавятся на своём спринте.</string>
 </resources>
