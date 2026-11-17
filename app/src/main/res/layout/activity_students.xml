@@ -1,56 +1,123 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootStudents"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/surface"
-    android:fillViewport="true"
     android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="24dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="32dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/btnBack"
             style="@style/BackButton"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
             android:text="@string/back" />
 
         <TextView
-            android:id="@+id/tvScreenTitle"
-            style="@style/ScreenTitle"
+            style="@style/AppTitle"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
             android:text="@string/students_title" />
 
         <TextView
-            android:id="@+id/tvScreenSubtitle"
-            style="@style/ScreenSubtitle"
+            style="@style/AppSubtitle"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:text="@string/students_subtitle" />
 
         <TextView
-            android:id="@+id/tvSprintBadge"
-            style="@style/SprintBadge"
-            android:text="@string/students_sprint" />
+            android:id="@+id/tvCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_badge"
+            android:paddingStart="12dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="6dp"
+            android:textColor="@color/badge_text"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            tools:text="Студентов: 0" />
 
-        <LinearLayout
-            style="@style/PlanBox">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <TextView
-                style="@style/PlanTitle"
-                android:text="@string/students_plan_title" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvStudents"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="10dp"
+                android:paddingBottom="12dp"
+                android:scrollbars="vertical" />
 
-            <TextView
-                style="@style/BodyText"
-                android:text="@string/students_plan" />
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/emptyState"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="32dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/students_empty_title"
+                    android:textColor="@color/ink"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="3dp"
+                    android:text="@string/students_empty_hint"
+                    android:textColor="@color/ink_secondary"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddStudentEmpty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/add_student" />
+            </LinearLayout>
+        </FrameLayout>
 
         <TextView
-            android:id="@+id/tvPlaceholder"
-            style="@style/PlaceholderText"
-            android:text="@string/students_placeholder" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/students_memory_hint"
+            android:textColor="@color/ink_muted"
+            android:textSize="11sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddStudent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/add_student" />
 
     </LinearLayout>
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
