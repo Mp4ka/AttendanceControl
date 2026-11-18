@@ -5,7 +5,7 @@
 
     <string name="main_subtitle">Учёт посещаемости студентов колледжа</string>
     <string name="main_section_actions">Разделы</string>
-    <string name="main_footer">Спринт 2 · студенты и группы · v0.2.0</string>
+    <string name="main_footer">Спринт 3 · занятие и отметки · v0.3.0</string>
 
     <string name="menu_students">Студенты</string>
     <string name="menu_students_hint">Список групп и студентов</string>
@@ -44,12 +44,25 @@
     <string name="delete_student_message">Удалить %1$s из списка? Отметки посещаемости этого студента тоже будут удалены.</string>
     <string name="delete_student_cd">Удалить студента</string>
 
-    <string name="attendance_title">Отметить посещаемость</string>
-    <string name="attendance_subtitle">Занятие и статусы присутствия</string>
-    <string name="attendance_placeholder">Экран-заготовка. Здесь появится выбор занятия и список студентов для отметки.</string>
-    <string name="attendance_plan_title">Планируется в следующих спринтах:</string>
-    <string name="attendance_plan">• выбор группы, даты и дисциплины\n• статусы «Присутствовал», «Отсутствовал», «Опоздал»\n• сохранение отметки для каждого студента</string>
-    <string name="attendance_sprint">Спринт 3</string>
+    <string name="lesson_title">Занятие</string>
+    <string name="lesson_subtitle">Выберите группу, дату и дисциплину</string>
+    <string name="hint_group_choose">Группа</string>
+    <string name="hint_subject">Дисциплина или тема</string>
+    <string name="lesson_date">Дата: %1$s</string>
+    <string name="start_marking">Перейти к отметке</string>
+    <string name="attendance_no_students">Сначала добавьте студентов в раздел «Студенты» — без них занятие не создать.</string>
+    <string name="error_group_required">Выберите группу из списка</string>
+
+    <string name="mark_title">Отметка посещаемости</string>
+    <string name="lesson_info">%1$s · %2$s · %3$s</string>
+    <string name="status_present">Присутствовал</string>
+    <string name="status_absent">Отсутствовал</string>
+    <string name="status_late">Опоздал</string>
+    <string name="save_marks">Сохранить отметки</string>
+    <string name="marks_saved">Отметки сохранены</string>
+    <string name="error_mark_all">Отметьте всех студентов</string>
+    <string name="group_empty">В группе нет студентов</string>
+    <string name="group_empty_hint">Добавьте студентов в раздел «Студенты», затем вернитесь к занятию.</string>
 
     <string name="statistics_title">Статистика</string>
     <string name="statistics_subtitle">Пропуски, опоздания и история</string>
