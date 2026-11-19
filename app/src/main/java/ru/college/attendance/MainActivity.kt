@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import ru.college.attendance.ui.AttendanceActivity
+import ru.college.attendance.ui.LessonActivity
 import ru.college.attendance.ui.StatisticsActivity
 import ru.college.attendance.ui.StudentsActivity
 
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
             openScreen(StudentsActivity::class.java)
         }
         findViewById<View>(R.id.cardAttendance).setOnClickListener {
-            openScreen(AttendanceActivity::class.java)
+            openScreen(LessonActivity::class.java)
         }
         findViewById<View>(R.id.cardStatistics).setOnClickListener {
             openScreen(StatisticsActivity::class.java)

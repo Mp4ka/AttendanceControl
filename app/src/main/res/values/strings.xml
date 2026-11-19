@@ -5,7 +5,7 @@
 
     <string name="main_subtitle">Учёт посещаемости студентов колледжа</string>
     <string name="main_section_actions">Разделы</string>
-    <string name="main_footer">Спринт 3 · занятие и отметки · v0.3.0</string>
+    <string name="main_footer">Спринт 4 · хранение данных · v0.4.0</string>
 
     <string name="menu_students">Студенты</string>
     <string name="menu_students_hint">Список групп и студентов</string>
@@ -21,7 +21,7 @@
     <string name="students_count">Студентов: %1$d</string>
     <string name="students_empty_title">Пока нет студентов</string>
     <string name="students_empty_hint">Добавьте первого студента — он появится в списке и будет доступен для отметки посещаемости.</string>
-    <string name="students_memory_hint">Данные хранятся в памяти до подключения базы (спринт 4)</string>
+    <string name="students_memory_hint">Данные сохраняются в базе устройства</string>
     <string name="add_student">Добавить студента</string>
 
     <string name="new_student_title">Новый студент</string>

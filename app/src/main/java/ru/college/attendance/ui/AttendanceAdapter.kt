@@ -24,7 +24,7 @@ class AttendanceAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_attendance, parent, false)
+            .inflate(R.layout.item_student_attendance, parent, false)
         return StudentViewHolder(view)
     }
 
