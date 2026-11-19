@@ -1,43 +1,48 @@
 package ru.college.attendance.data
 
+import ru.college.attendance.data.database.StudentDao
+import ru.college.attendance.data.database.StudentEntity
+import ru.college.attendance.data.database.toModel
+
 /**
- * Временное хранилище студентов в памяти приложения (спринт 2).
+ * Репозиторий студентов поверх Room (спринт 4).
  *
- * Данные исчезают после полного закрытия процесса. На спринте 4 этот класс
- * заменится на Room-репозиторий с теми же методами, поэтому экраны не изменятся.
+ * Данные сохраняются в базе `attendance.db` и не пропадают после перезапуска приложения.
  */
 object StudentRepository {
 
-    private val students = mutableListOf<Student>()
-    private var nextId = 1L
+    private lateinit var dao: StudentDao
+
+    fun init(dao: StudentDao) {
+        this.dao = dao
+    }
 
     /** Список студентов, отсортированный по фамилии и имени. */
-    fun getAll(): List<Student> = students.sortedWith(
-        compareBy({ it.lastName.lowercase() }, { it.firstName.lowercase() })
-    )
+    suspend fun getAll(): List<Student> = dao.getAll().map { it.toModel() }
 
-    /** Добавляет студента и возвращает сохранённую запись. */
-    fun add(lastName: String, firstName: String, groupName: String): Student {
-        val student = Student(
-            id = nextId++,
+    /** Добавляет студента и возвращает сохранённую запись с присвоенным id. */
+    suspend fun add(lastName: String, firstName: String, groupName: String): Student {
+        val entity = StudentEntity(
             lastName = lastName.trim(),
             firstName = firstName.trim(),
             groupName = groupName.trim()
         )
-        students += student
-        return student
+        val id = dao.insert(entity)
+        return entity.copy(id = id).toModel()
     }
 
-    /** Удаляет студента; возвращает true, если запись была найдена. */
-    fun delete(student: Student): Boolean = students.remove(student)
+    /** Удаляет студента; его отметки удаляются каскадно. */
+    suspend fun delete(student: Student) {
+        dao.deleteById(student.id)
+    }
 
     /** Проверяет, есть ли уже такой студент в этой группе (без учёта регистра). */
-    fun isDuplicate(lastName: String, firstName: String, groupName: String): Boolean =
-        students.any { existing ->
+    suspend fun isDuplicate(lastName: String, firstName: String, groupName: String): Boolean =
+        dao.getAll().any { existing ->
             existing.lastName.equals(lastName.trim(), ignoreCase = true) &&
                 existing.firstName.equals(firstName.trim(), ignoreCase = true) &&
                 existing.groupName.equals(groupName.trim(), ignoreCase = true)
         }
 
-    fun count(): Int = students.size
+    suspend fun count(): Int = dao.count()
 }

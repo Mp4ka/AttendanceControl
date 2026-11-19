@@ -6,16 +6,18 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import ru.college.attendance.R
 import ru.college.attendance.data.Student
 import ru.college.attendance.data.StudentRepository
 
 /**
- * Список студентов (спринт 2).
+ * Список студентов (спринт 2, хранение в Room — спринт 4).
  *
  * Показывает карточки студентов, пустое состояние, счётчик и кнопку добавления.
  * Добавление открывается отдельным экраном, удаление — с подтверждением.
@@ -60,23 +62,24 @@ class StudentsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        refresh()
+        loadStudents()
     }
 
     private fun openAddForm() {
         addStudentLauncher.launch(Intent(this, AddStudentActivity::class.java))
     }
 
-    private fun refresh() {
-        val students = StudentRepository.getAll()
-        adapter.submitList(students)
+    private fun loadStudents() {
+        lifecycleScope.launch {
+            val students = StudentRepository.getAll()
+            adapter.submitList(students)
+            tvCount.text = getString(R.string.students_count, students.size)
 
-        tvCount.text = getString(R.string.students_count, students.size)
-
-        val isEmpty = students.isEmpty()
-        emptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
-        recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
-        btnAddStudent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            val isEmpty = students.isEmpty()
+            emptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            btnAddStudent.visibility = if (isEmpty) View.GONE else View.VISIBLE
+        }
     }
 
     private fun confirmDelete(student: Student) {
@@ -85,13 +88,15 @@ class StudentsActivity : AppCompatActivity() {
             .setMessage(getString(R.string.delete_student_message, student.fullName))
             .setNegativeButton(R.string.cancel, null)
             .setPositiveButton(R.string.delete) { _, _ ->
-                StudentRepository.delete(student)
-                refresh()
-                Snackbar.make(
-                    findViewById(R.id.rootStudents),
-                    R.string.student_deleted,
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                lifecycleScope.launch {
+                    StudentRepository.delete(student)
+                    loadStudents()
+                    Snackbar.make(
+                        findViewById(R.id.rootStudents),
+                        R.string.student_deleted,
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
             }
             .show()
     }

@@ -1,124 +1,120 @@
 package ru.college.attendance.ui
 
-import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import ru.college.attendance.R
+import ru.college.attendance.data.Attendance
+import ru.college.attendance.data.AttendanceRepository
+import ru.college.attendance.data.AttendanceStatus
+import ru.college.attendance.data.Student
 import ru.college.attendance.data.StudentRepository
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 /**
- * Экран занятия (спринт 3): группа, дата и дисциплина.
+ * Экран отметки посещаемости (спринт 3, хранение в Room — спринт 4).
  *
- * Группы берутся из уже добавленных студентов. После заполнения полей
- * открывается экран отметки посещаемости.
+ * Для каждого студента группы показывается выбор статуса. До нажатия
+ * «Сохранить отметки» статус можно менять сколько угодно раз; в базе
+ * хранится ровно одна отметка на студента и занятие.
  */
 class AttendanceActivity : AppCompatActivity() {
 
-    private val displayFormat = SimpleDateFormat("dd.MM.yyyy", Locale.forLanguageTag("ru"))
-    private val storageFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    private val calendar: Calendar = Calendar.getInstance()
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var emptyState: View
+    private lateinit var btnSave: MaterialButton
 
-    private lateinit var tilGroup: TextInputLayout
-    private lateinit var etGroup: MaterialAutoCompleteTextView
-    private lateinit var tilSubject: TextInputLayout
-    private lateinit var btnDate: MaterialButton
-    private lateinit var btnStart: MaterialButton
-    private lateinit var tvNoStudents: TextView
-
-    private var groups: List<String> = emptyList()
+    private lateinit var dateIso: String
+    private lateinit var subject: String
+    private var students: List<Student> = emptyList()
+    private val selectedStatuses = mutableMapOf<Long, AttendanceStatus>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attendance)
 
-        tilGroup = findViewById(R.id.tilGroup)
-        etGroup = findViewById(R.id.etGroup)
-        tilSubject = findViewById(R.id.tilSubject)
-        btnDate = findViewById(R.id.btnDate)
-        btnStart = findViewById(R.id.btnStart)
-        tvNoStudents = findViewById(R.id.tvNoStudents)
+        val group = intent.getStringExtra(EXTRA_GROUP).orEmpty()
+        dateIso = intent.getStringExtra(EXTRA_DATE).orEmpty()
+        subject = intent.getStringExtra(EXTRA_SUBJECT).orEmpty().trim()
+        val dateLabel = intent.getStringExtra(EXTRA_DATE_LABEL).orEmpty()
 
+        findViewById<TextView>(R.id.tvLessonInfo).text =
+            getString(R.string.lesson_info, group, dateLabel, subject)
         findViewById<TextView>(R.id.btnBack).setOnClickListener { finish() }
-        btnDate.text = getString(R.string.lesson_date, displayFormat.format(calendar.time))
-        btnDate.setOnClickListener { pickDate() }
-        btnStart.setOnClickListener { startMarking() }
 
-        tilSubject.editText?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
-            override fun afterTextChanged(s: Editable?) {
-                tilSubject.error = null
+        recyclerView = findViewById(R.id.rvAttendance)
+        emptyState = findViewById(R.id.emptyMark)
+        btnSave = findViewById(R.id.btnSaveMarks)
+
+        val adapter = AttendanceAdapter(
+            statusOf = { studentId -> selectedStatuses[studentId] },
+            onStatusSelected = { studentId, status -> selectedStatuses[studentId] = status }
+        )
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
+
+        btnSave.isEnabled = false
+        btnSave.setOnClickListener { saveMarks() }
+
+        lifecycleScope.launch {
+            students = StudentRepository.getAll().filter { it.groupName == group }
+            students.forEach { student ->
+                AttendanceRepository.find(student.id, dateIso, subject)?.let { attendance ->
+                    selectedStatuses[student.id] = attendance.status
+                }
             }
-        })
+            adapter.submitList(students)
 
-        groups = StudentRepository.getAll().map { it.groupName }.distinct().sorted()
-        val groupAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, groups)
-        etGroup.setAdapter(groupAdapter)
-        etGroup.setOnItemClickListener { _, _, position, _ ->
-            etGroup.setText(groups[position], false)
-            tilGroup.error = null
-        }
-        etGroup.setOnClickListener { etGroup.showDropDown() }
-
-        if (groups.isEmpty()) {
-            tvNoStudents.visibility = View.VISIBLE
-            tilGroup.isEnabled = false
-            btnStart.isEnabled = false
+            val isEmpty = students.isEmpty()
+            emptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
+            btnSave.isEnabled = !isEmpty
         }
     }
 
-    private fun pickDate() {
-        DatePickerDialog(
-            this,
-            { _, year, month, dayOfMonth ->
-                calendar.set(Calendar.YEAR, year)
-                calendar.set(Calendar.MONTH, month)
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                btnDate.text = getString(R.string.lesson_date, displayFormat.format(calendar.time))
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
+    private fun saveMarks() {
+        val missing = students.firstOrNull { selectedStatuses[it.id] == null }
+        if (missing != null) {
+            Snackbar.make(
+                findViewById(R.id.rootMark),
+                R.string.error_mark_all,
+                Snackbar.LENGTH_SHORT
+            ).show()
+            recyclerView.scrollToPosition(students.indexOf(missing))
+            return
+        }
+
+        val records = students.map { student ->
+            Attendance(
+                studentId = student.id,
+                lessonDate = dateIso,
+                subject = subject,
+                status = selectedStatuses.getValue(student.id)
+            )
+        }
+
+        btnSave.isEnabled = false
+        lifecycleScope.launch {
+            AttendanceRepository.saveAll(records)
+            btnSave.isEnabled = true
+            Snackbar.make(
+                findViewById(R.id.rootMark),
+                R.string.marks_saved,
+                Snackbar.LENGTH_LONG
+            ).show()
+        }
     }
 
-    private fun startMarking() {
-        val group = etGroup.text?.toString()?.trim().orEmpty()
-        val subject = tilSubject.editText?.text?.toString()?.trim().orEmpty()
-
-        var hasError = false
-        if (group.isEmpty() || !groups.contains(group)) {
-            tilGroup.error = getString(R.string.error_group_required)
-            hasError = true
-        } else {
-            tilGroup.error = null
-        }
-        if (subject.isEmpty()) {
-            tilSubject.error = getString(R.string.error_required)
-            hasError = true
-        } else {
-            tilSubject.error = null
-        }
-        if (hasError) return
-
-        val intent = Intent(this, MarkAttendanceActivity::class.java).apply {
-            putExtra(MarkAttendanceActivity.EXTRA_GROUP, group)
-            putExtra(MarkAttendanceActivity.EXTRA_DATE, storageFormat.format(calendar.time))
-            putExtra(MarkAttendanceActivity.EXTRA_DATE_LABEL, displayFormat.format(calendar.time))
-            putExtra(MarkAttendanceActivity.EXTRA_SUBJECT, subject)
-        }
-        startActivity(intent)
+    companion object {
+        const val EXTRA_GROUP = "extra_group"
+        const val EXTRA_DATE = "extra_date"
+        const val EXTRA_DATE_LABEL = "extra_date_label"
+        const val EXTRA_SUBJECT = "extra_subject"
     }
 }
