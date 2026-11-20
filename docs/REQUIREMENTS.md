@@ -78,7 +78,8 @@
 
 Правила полей, тексты ошибок и примеры ввода зафиксированы в
 [docs/STUDENT_INPUT_SPEC.md](STUDENT_INPUT_SPEC.md), сценарий занятия и статусы —
-в [docs/ATTENDANCE_SPEC.md](ATTENDANCE_SPEC.md).
+в [docs/ATTENDANCE_SPEC.md](ATTENDANCE_SPEC.md), показатели и фильтры —
+в [docs/STATISTICS_SPEC.md](STATISTICS_SPEC.md).
 
 ## 6. Модель данных (проект на 6 спринтов)
 
