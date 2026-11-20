@@ -5,7 +5,7 @@
 
     <string name="main_subtitle">Учёт посещаемости студентов колледжа</string>
     <string name="main_section_actions">Разделы</string>
-    <string name="main_footer">Спринт 4 · хранение данных · v0.4.0</string>
+    <string name="main_footer">Спринт 5 · статистика и история · v0.5.0</string>
 
     <string name="menu_students">Студенты</string>
     <string name="menu_students_hint">Список групп и студентов</string>
@@ -65,9 +65,22 @@
     <string name="group_empty_hint">Добавьте студентов в раздел «Студенты», затем вернитесь к занятию.</string>
 
     <string name="statistics_title">Статистика</string>
-    <string name="statistics_subtitle">Пропуски, опоздания и история</string>
-    <string name="statistics_placeholder">Экран-заготовка. Здесь появится история посещаемости и подсчёт статусов.</string>
-    <string name="statistics_plan_title">Планируется в следующих спринтах:</string>
-    <string name="statistics_plan">• история отметок по студенту и группе\n• количество занятий, присутствий и пропусков\n• фильтры по дате и группе</string>
-    <string name="statistics_sprint">Спринт 5</string>
+    <string name="statistics_subtitle">Посещаемость по группе, студенту и дате</string>
+    <string name="filter_group">Группа</string>
+    <string name="filter_student">Студент</string>
+    <string name="filter_date">Дата</string>
+    <string name="filter_all_groups">Все группы</string>
+    <string name="filter_all_students">Все студенты</string>
+    <string name="filter_all_dates">Все даты</string>
+    <string name="stat_lessons">Занятий</string>
+    <string name="stat_present">Присутствий</string>
+    <string name="stat_absent">Пропусков</string>
+    <string name="stat_late">Опозданий</string>
+    <string name="history_title">История</string>
+    <string name="history_lesson">%1$s · %2$s</string>
+    <string name="history_count">Записей: %1$d</string>
+    <string name="history_empty">Отметок пока нет</string>
+    <string name="history_empty_hint">Отметьте посещаемость на занятии — история появится здесь.</string>
+    <string name="history_filtered_empty">По выбранным фильтрам ничего не найдено</string>
+    <string name="history_filtered_hint">Измените фильтры или отметьте другое занятие.</string>
 </resources>

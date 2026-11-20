@@ -16,4 +16,7 @@
     <color name="badge_background">#E8EEFF</color>
     <color name="badge_text">#2A43A8</color>
     <color name="plan_background">#EEF2FF</color>
+    <color name="status_present_color">#1B8A5A</color>
+    <color name="status_absent_color">#C0392B</color>
+    <color name="status_late_color">#B26A00</color>
 </resources>
