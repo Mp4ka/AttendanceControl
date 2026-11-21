@@ -5,7 +5,7 @@
 
     <string name="main_subtitle">Учёт посещаемости студентов колледжа</string>
     <string name="main_section_actions">Разделы</string>
-    <string name="main_footer">Спринт 5 · статистика и история · v0.5.0</string>
+    <string name="main_footer">Финальная версия 1.0.0</string>
 
     <string name="menu_students">Студенты</string>
     <string name="menu_students_hint">Список групп и студентов</string>

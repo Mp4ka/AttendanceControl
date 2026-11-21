@@ -13,8 +13,8 @@ android {
         applicationId = "ru.college.attendance"
         minSdk = 24
         targetSdk = 37
-        versionCode = 5
-        versionName = "0.5.0-sprint5"
+        versionCode = 6
+        versionName = "1.0.0"
     }
 
     buildTypes {
